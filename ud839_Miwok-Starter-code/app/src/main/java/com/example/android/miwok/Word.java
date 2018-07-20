@@ -4,10 +4,9 @@ public class Word {
 
     private String mDefaultTranslation;
     private String mMiwokTranslation;
-    private int mImageResourceId;
+    private int mImageResourceId = NO_IMAGE_PROVIDED;
 
-
-
+    private static final int NO_IMAGE_PROVIDED = -1;
 
     /**
      * A word constructor with english word and miwok word- specially for phrases activity
@@ -17,7 +16,6 @@ public class Word {
     public Word(String defaultTranslation,String miwokTranslation){
         mDefaultTranslation = defaultTranslation;
         mMiwokTranslation = miwokTranslation;
-
     }
 
 
@@ -45,4 +43,12 @@ public class Word {
 
     //Get image resource ID
     public int getImageResourceID(){return  mImageResourceId; }
+
+    /**
+     *
+     * Returns whether or not there is an image for this word.
+     */
+    public boolean hasImage(){
+        return mImageResourceId != NO_IMAGE_PROVIDED;
+    }
 }
