@@ -62,4 +62,14 @@ public class Word {
      * @return Returns the audio assiocated with the word object
      */
     public int getAudioResourceID(){return  mAudioResourceId; }
+
+    @Override
+    public String toString() {
+        return "Word{" +
+                "mDefaultTranslation='" + mDefaultTranslation + '\'' +
+                ", mMiwokTranslation='" + mMiwokTranslation + '\'' +
+                ", mImageResourceId=" + mImageResourceId +
+                ", mAudioResourceId=" + mAudioResourceId +
+                '}';
+    }
 }
