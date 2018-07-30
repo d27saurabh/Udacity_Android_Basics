@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/list_item_height"
     android:minHeight="@dimen/list_item_height"
     android:id="@+id/list_item"
-    android:orientation="horizontal"
     android:background="@color/tan_background">
 
 
@@ -16,16 +15,20 @@
             android:src="@mipmap/ic_launcher"
             android:id="@+id/image"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/list_item_height"
             android:id="@+id/text_container"
+            android:layout_toRightOf="@+id/image"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:orientation="vertical"
             android:paddingLeft="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
                 android:gravity="bottom"
                 android:id="@+id/miwok_textView"
@@ -36,13 +39,22 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
+                android:layout_below="@+id/miwok_textView"
                 android:gravity="top"
                 android:id="@+id/default_textView"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="#FFFFFF"
                 tools:text="one"/>
 
-        </LinearLayout>
-</LinearLayout>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/baseline_play_arrow_white_24"/>
+
+        </RelativeLayout>
+</RelativeLayout>

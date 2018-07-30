@@ -85,8 +85,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
         //Set the background container of the text container View
         textContainer.setBackgroundColor(color);
 
-        //Return teh whole lisy item layout(conatining 2 textViews) so that it can be shown in the listView
+        //Return teh whole lisy item layout(containing 2 textViews) so that it can be shown in the listView
         return listItemView;
-
     }
 }
