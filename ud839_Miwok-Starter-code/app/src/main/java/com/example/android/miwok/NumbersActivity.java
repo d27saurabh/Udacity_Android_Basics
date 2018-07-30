@@ -4,7 +4,10 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,7 +25,6 @@ public class NumbersActivity extends AppCompatActivity {
 
         /**Handles audio focus when playing a sound file */
         private AudioManager mAudiomanager;
-
 
         AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener =
                 new AudioManager.OnAudioFocusChangeListener() {
@@ -56,6 +58,9 @@ public class NumbersActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.word_list);
 
+
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             mAudiomanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
@@ -140,5 +145,13 @@ public class NumbersActivity extends AppCompatActivity {
             // Abandon audio focus when playback complete
             mAudiomanager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
