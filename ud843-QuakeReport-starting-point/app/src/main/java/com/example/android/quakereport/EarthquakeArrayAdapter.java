@@ -1,18 +1,23 @@
 package com.example.android.quakereport;
 
 import android.app.Activity;
-import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class EarthquakeArrayAdapter extends ArrayAdapter<Earthquake> {
+
+    private static final String LOCATION_SEPARATOR = " of ";
+    String primaryLocation;
+    String locationOffset;
+
 
     /**
      * This is our own custom constructor (it doesn't mirror a superclass constructor).
@@ -54,18 +59,25 @@ public class EarthquakeArrayAdapter extends ArrayAdapter<Earthquake> {
         //Find the TextView with view ID magnitude
         TextView MagnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
         //Display the magnitude of the current earthquake in that TextView
-        MagnitudeView.setText(currentEarthquake.getmMagnitude());
-
-        //Find the TextView with view ID location
-        TextView LocationView1 = (TextView) listItemView.findViewById(R.id.location_offset );
-        TextView LocationView2 = (TextView) listItemView.findViewById(R.id.primary_location );
+        String formattedMagnitude = formatMagnitude(currentEarthquake.getmMagnitude());
+        MagnitudeView.setText(formattedMagnitude);
 
         String originalLocation = currentEarthquake.getmLocation();
-        String[] LocationArray = Location.split(",");
 
-        //Display the location of the current earthquake in that TextView
-        LocationView1.setText(LocationArray[0]);
-        LocationView2.setText(LocationArray[1]);
+        if (originalLocation.contains(LOCATION_SEPARATOR)) {
+            String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+            locationOffset = parts[0] + LOCATION_SEPARATOR;
+            primaryLocation = parts[1];
+        } else {
+            locationOffset = getContext().getString(R.string.near_the);
+            primaryLocation = originalLocation;
+        }
+        //Find the TextView with view ID location
+        TextView primaryLocationView = (TextView) listItemView.findViewById(R.id.primary_location);
+        primaryLocationView.setText(primaryLocation);
+
+        TextView locationOffsetView = (TextView) listItemView.findViewById(R.id.location_offset);
+        locationOffsetView.setText(locationOffset);
 
         //Create a new Fate object from the time in milliseconds of the earthquake
         Date dateObject = new Date(currentEarthquake.getmTimeInMilliseconds());
@@ -87,19 +99,28 @@ public class EarthquakeArrayAdapter extends ArrayAdapter<Earthquake> {
         return listItemView;
     }
 
-        /**
-         * Return the formatted date string (i.e. "Mar 3, 1984") from a Date object.
-         */
-        private String formatDate(Date dateObject) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
-            return dateFormat.format(dateObject);
-        }
+    /**
+     * Return the formatted date string (i.e. "Mar 3, 1984") from a Date object.
+     */
+    private String formatDate(Date dateObject) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
+        return dateFormat.format(dateObject);
+    }
 
-        /**
-         * Return the formatted date string (i.e. "4:30 PM") from a Date object.
-         */
-        private String formatTime(Date dateObject) {
-            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-            return timeFormat.format(dateObject);
-        }
+    /**
+     * Return the formatted date string (i.e. "4:30 PM") from a Date object.
+     */
+    private String formatTime(Date dateObject) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+        return timeFormat.format(dateObject);
+    }
+
+    /**
+     * Return the formatted magnitude string showing 1 decimal place (i.e. "3.2")
+     * from a decimal magnitude value.
+     */
+    private String formatMagnitude(double magnitude) {
+        DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
+        return magnitudeFormat.format(magnitude);
+    }
 }
